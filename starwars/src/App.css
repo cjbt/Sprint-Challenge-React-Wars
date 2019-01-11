@@ -6,3 +6,22 @@
   text-shadow: 1px 1px 5px #fff;
 }
 /* write your parent styles in here for your App.js */
+
+* {
+  box-sizing: border-box;
+}
+
+p {
+  font-size: 62.5%;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+body {
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+}
