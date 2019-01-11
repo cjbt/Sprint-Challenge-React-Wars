@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
 import './App.css';
+import StarWarsList from './components/StarWarsList/StarWarsList';
+import Button from './components/Pagination/Button';
+
+const starWarsURL = page => `https://swapi.co/api/people/?page=${page}`;
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      starwarsChars: []
+      starwarsChars: [],
+      page: 1
     };
   }
 
   componentDidMount() {
-    this.getCharacters('https://swapi.co/api/people');
+    console.log(this.state.page);
+    this.getCharacters(starWarsURL(this.state.page));
   }
 
   getCharacters = URL => {
@@ -22,6 +28,7 @@ class App extends Component {
         return res.json();
       })
       .then(data => {
+        console.log(data);
         this.setState({ starwarsChars: data.results });
       })
       .catch(err => {
@@ -29,10 +36,37 @@ class App extends Component {
       });
   };
 
+  getNext = () => {
+    if (this.state.page === 9) {
+      return this.setState({
+        page: 9
+      });
+    } else {
+      this.setState(prevState => ({
+        page: (prevState.page += 1)
+      }));
+      this.getCharacters(starWarsURL(this.state.page));
+    }
+  };
+  getPrev = () => {
+    if (this.state.page === 1) {
+      this.setState({
+        page: 1
+      });
+    } else {
+      this.setState(prevState => ({
+        page: (prevState.page -= 1)
+      }));
+      this.getCharacters(starWarsURL(this.state.page));
+    }
+  };
+
   render() {
     return (
-      <div className="App">
-        <h1 className="Header">React Wars</h1>
+      <div className='App'>
+        <StarWarsList starwarsChars={this.state.starwarsChars} />
+        <Button buttonName='Previous' handleChange={this.getPrev} />
+        <Button buttonName='Next' handleChange={this.getNext} />
       </div>
     );
   }
