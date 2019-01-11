@@ -6,4 +6,7 @@
 .starwarscard-container {
   border: 1px solid red;
   padding: 0 0;
+  background-color: white;
+  margin-left: 10px;
+  margin-right: 10px;
 }

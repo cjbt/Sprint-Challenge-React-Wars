@@ -37,16 +37,28 @@ class App extends Component {
   };
 
   getNext = () => {
-    this.setState(prevState => ({
-      page: (prevState.page += 1)
-    }));
-    this.getCharacters(starWarsURL(this.state.page));
+    if (this.state.page === 9) {
+      return this.setState({
+        page: 9
+      });
+    } else {
+      this.setState(prevState => ({
+        page: (prevState.page += 1)
+      }));
+      this.getCharacters(starWarsURL(this.state.page));
+    }
   };
   getPrev = () => {
-    this.setState(prevState => ({
-      page: (prevState.page -= 1)
-    }));
-    this.getCharacters(starWarsURL(this.state.page));
+    if (this.state.page === 1) {
+      this.setState({
+        page: 1
+      });
+    } else {
+      this.setState(prevState => ({
+        page: (prevState.page -= 1)
+      }));
+      this.getCharacters(starWarsURL(this.state.page));
+    }
   };
 
   render() {
